@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "index.js",
+    "tools/**/*.js",
+    "server/**/*.js",
+    "server/**/*.jsx",
+    "server/**/*.ts",
+    "server/**/*.tsx",
+    "client/**/*.js",
+    "client/**/*.jsx",
+    "client/**/*.ts",
+    "client/**/*.tsx"
+  ]
+}

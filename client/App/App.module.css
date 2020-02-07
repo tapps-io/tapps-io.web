@@ -1,0 +1,8 @@
+.app {
+  padding: 2rem 4rem;
+  height: 100%;
+  color: var(--c_alpha);
+  font-family: sans-serif;
+  font-weight: bold;
+  background: var(--c_beta);
+}
