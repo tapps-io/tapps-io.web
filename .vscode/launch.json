@@ -5,11 +5,35 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach web - debugging in chrome",
+      "url": "http://localhost:3002*",
+      "webRoot": "${workspaceFolder}/src",
+      "port": 9222,
+      "sourceMaps": true
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach server - debugging server",
+      "port": 9229,
+      "restart": true
+    },
+    {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/index.js",
-      "outFiles": ["${workspaceFolder}/**/*.js"]
+      "name": "Start server - debugging server",
+      "protocol": "inspector",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
+      "args": ["-x", ".js,.jsx,.ts,.tsx", "server/main.ts"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Build - debugging build steps",
+      "program": "${workspaceFolder}/node_modules/webpack/bin/webpack.js"
+      //"args": ["-w"]
     }
   ]
 }

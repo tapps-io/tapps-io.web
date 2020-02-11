@@ -3,19 +3,22 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const { HotModuleReplacementPlugin, ProvidePlugin } = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+
+// Single instance used for all configurations
 
 const serverCWD = path.join(process.cwd(), 'server');
 const clientCWD = path.join(process.cwd(), 'client');
 const compileModules = ['@trutoo'];
 
-const base = (_, argv) => ({
-  mode: argv.mode || 'development',
+const base = env => ({
+  mode: env.production ? 'production' : 'development',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     modules: ['node_modules'],
@@ -38,20 +41,8 @@ const base = (_, argv) => ({
   },
 
   plugins: [
-    new ForkTsCheckerWebpackPlugin({
-      tsconfig: path.resolve('tsconfig.json'),
-      eslint: true,
-      checkSyntacticErrors: true,
-    }),
-  ].concat(
-    argv.mode !== 'production'
-      ? [
-          new ProvidePlugin({
-            Promise: ['core-js/es/promise'], // Polyfill promises for react-hot-reload on dev servers
-          }),
-        ]
-      : [],
-  ),
+    ...(env.production ? [new ProvidePlugin({ Promise: ['core-js/es/promise'] })] : []), // Polyfill promises for react-hot-reload on dev servers
+  ],
 
   performance: {
     maxEntrypointSize: 512000,
@@ -78,20 +69,20 @@ const base = (_, argv) => ({
     ],
   },
 
-  devtool: argv.mode !== 'production' ? 'cheap-module-eval-source-map' : false,
+  devtool: env.production ? 'cheap-module-eval-source-map' : false,
 });
 
 //------------------------------------------------------------------------------------
 // SERVER SPECIFIC CONFIGURATION
 //------------------------------------------------------------------------------------
 
-const server = (_, argv) =>
-  merge(base(_, argv), {
+const server = (env = {}) =>
+  merge(base(env), {
     name: 'server',
     context: serverCWD,
     entry: ['./main.ts'],
     target: 'node',
-    externals: [/webpack\.config$/, nodeExternals()],
+    externals: [nodeExternals()],
     output: {
       filename: 'server.js',
       libraryTarget: 'commonjs2',
@@ -105,8 +96,8 @@ const server = (_, argv) =>
 // CLIENT SPECIFIC CONFIGURATION
 //------------------------------------------------------------------------------------
 
-const client = (_, argv) =>
-  merge(base(_, argv), {
+const client = (env = {}) =>
+  merge(base(env), {
     name: 'client',
     context: clientCWD,
     entry: ['./main.tsx'],
@@ -126,7 +117,7 @@ const client = (_, argv) =>
             {
               loader: MiniCssExtractPlugin.loader,
               options: {
-                hmr: argv.mode !== 'production',
+                hmr: env.production,
               },
             },
           ],
@@ -140,7 +131,7 @@ const client = (_, argv) =>
               loader: 'css-loader',
               options: {
                 modules: {
-                  localIdentName: argv.mode === 'production' ? '[hash:base64]' : '[local]_[hash:base64:7]',
+                  localIdentName: env.production ? '[hash:base64]' : '[local]_[hash:base64:7]',
                 },
               },
             },
@@ -175,7 +166,17 @@ const client = (_, argv) =>
     },
 
     plugins: [
+      // Handles type checking for both server and client
+      // https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/issues/229
+      new ForkTsCheckerWebpackPlugin({
+        tsconfig: path.resolve('tsconfig.json'),
+        eslint: true,
+        checkSyntacticErrors: true,
+      }),
       new HotModuleReplacementPlugin(),
+      new HtmlWebpackPlugin({
+        template: './index.html',
+      }),
       new StyleLintPlugin({
         files: '**/*.css',
       }),

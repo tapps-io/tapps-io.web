@@ -1,7 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "include": [
-    "index.js",
+    ".eslintrc.js",
+    "babel.config.js",
+    "jest.config.js",
+    "postcss.config.js",
+    "webpack.config.js",
     "tools/**/*.js",
     "server/**/*.js",
     "server/**/*.jsx",

@@ -8,14 +8,7 @@ module.exports = {
         allExtensions: true,
       },
     ],
-    [
-      '@babel/preset-env',
-      {
-        modules: false,
-        useBuiltIns: 'usage',
-        corejs: 'core-js@3',
-      },
-    ],
+    ['@babel/preset-env', { targets: { node: 'current' } }],
   ],
   plugins: [
     ['@babel/plugin-proposal-decorators', { legacy: true }],
@@ -27,6 +20,16 @@ module.exports = {
   env: {
     test: {
       presets: [['@babel/preset-env', { targets: { node: 'current' } }]],
+    },
+    web: {
+      presets: [
+        '@babel/preset-env',
+        {
+          modules: false,
+          useBuiltIns: 'usage',
+          corejs: 'core-js@3',
+        },
+      ],
     },
   },
 };

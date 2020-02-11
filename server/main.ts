@@ -1,62 +1,59 @@
+#!/usr/bin/env node
 /* eslint-disable @typescript-eslint/no-var-requires */
-
+import { config } from 'dotenv';
 import path from 'path';
-import express from 'express';
+import express, { Express, Router } from 'express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import { Compiler } from 'webpack';
 
+import { Transformations } from './utils/transformations';
+
+config();
 const app = express();
+const transformations = new Transformations();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(compression());
 
-//------------------------------------------------------------------------------------
-// HOT RELOAD FOR DEVELOPMENT
-//------------------------------------------------------------------------------------
-
-if (process.env.NODE_ENV !== 'production') {
-  /* Load Config and Setup Compilers */
-  const webpack = require('webpack');
-  let [server, client] = require(path.resolve('webpack.config'));
-  server = server(undefined, {});
-  client = client(undefined, {});
-  client.entry.push('webpack-hot-middleware/client');
-  const serverCompiler = webpack(server);
-  const clientCompiler = webpack(client);
-
-  /* Joint compiler settings */
-  const watchOptions = {
-    aggregateTimeout: 300,
-    poll: true,
-  };
-
-  /* Watch for server changes */
-  serverCompiler.watch(watchOptions, (err: any, stats: any) => {
-    if (err) {
-      throw err;
+let router: Router;
+let compiler: Compiler;
+let dev:
+  | {
+      devMode: (app: Express) => Compiler;
+      devRoutes: (compiler: Compiler, router: Router, transformations: Transformations) => void;
     }
-    const statsJSON = stats.toJson();
-    console.log(`Server bundle built ${statsJSON.hash} in ${statsJSON.time} ms`);
-  });
+  | undefined;
 
-  /* Watch for client changes */
-  clientCompiler.watch(watchOptions, (err: any, stats: any) => {
-    if (err) {
-      throw err;
-    }
-    const statsJSON = stats.toJson();
-    console.log(`Client bundle built ${statsJSON.hash} in ${statsJSON.time} ms`);
-  });
-
-  /* Attach hot reload to client compiler */
-  app.use(
-    require('webpack-hot-middleware')(clientCompiler, {
-      log: false,
-      path: '/__webpack_hmr',
-      heartbeat: 10 * 1000,
-    }),
-  );
+if (process.env.NODE_ENV === 'development') {
+  dev = require('./dev.ts');
 }
+
+//------------------------------------------------------------------------------------
+// BUILD AND HOT RELOAD FOR DEVELOPMENT
+//------------------------------------------------------------------------------------
+
+if (process.env.NODE_ENV === 'development') {
+  if (dev) compiler = dev.devMode(app);
+}
+
+//------------------------------------------------------------------------------------
+// ENDPOINTS
+//------------------------------------------------------------------------------------
+
+// Add API routes
+router = require('./endpoints/index.ts').endpoints();
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === 'development') {
+    router = require('./endpoints/index.ts').endpoints();
+    if (dev) dev.devRoutes(compiler, router, transformations);
+  } else {
+    router.get('*', (req, res) => {
+      return res.status(200).sendFile(path.join(__dirname, 'public/index.html'));
+    });
+  }
+  router(req, res, next);
+});
 
 //------------------------------------------------------------------------------------
 // SERVER

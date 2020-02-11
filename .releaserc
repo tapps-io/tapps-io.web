@@ -20,13 +20,13 @@
       "@semantic-release/exec",
       {
         "verifyConditionsCmd": "npm run test",
-        "prepareCmd": "docker build -t trutoo/fragment-gateway ."
+        "prepareCmd": "docker build -t tapps/tapps-io.web ."
       }
     ],
     [
       "semantic-release-docker",
       {
-        "name": "trutoo/fragment-gateway"
+        "name": "tapps/tapps-io.web"
       }
     ],
     "@semantic-release/git"
