@@ -26,7 +26,7 @@
       "name": "Start server - debugging server",
       "protocol": "inspector",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
-      "args": ["-x", ".js,.jsx,.ts,.tsx", "server/main.ts"]
+      "args": ["-x", ".js,.jsx,.ts,.tsx", "src/server.ts"]
     },
     {
       "type": "node",
