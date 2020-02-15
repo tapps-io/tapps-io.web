@@ -1,8 +1,7 @@
+@import '@trutoo/ui-core/dist/styles/variables.css';
 @import '@trutoo/ui-core/dist/styles/base.css';
 
 @import '@trutoo/ui-core/dist/components/Container/Container.css';
 @import '@trutoo/ui-core/dist/components/Grid/Grid.css';
 
-body {
-  padding: 2rem;
-}
+@import './typeography.css';
