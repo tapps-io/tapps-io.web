@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { NextPageContext } from 'next';
 import fetch from 'isomorphic-unfetch';
+import { Container } from '@trutoo/ui-core';
 
-import { Tapp, TappProps } from 'components/Tapp/Tapp';
+import s from './page.module.css';
+
 import APIUtil from 'utils/api';
+import { Tapp, TappProps } from 'components/Tapp/Tapp';
+import { TappHeader } from 'components/TappHeader/TappHeader';
 
 interface Props {
   tapp: TappProps;
@@ -17,6 +21,15 @@ export default class Page extends Component<Props> {
   }
 
   render() {
-    return <Tapp {...this.props.tapp} />;
+    return (
+      <div>
+        <TappHeader {...this.props.tapp} />
+        <Container>
+          <div className={`${s.card} tu-elevation-12`}>
+            <Tapp {...this.props.tapp} />
+          </div>
+        </Container>
+      </div>
+    );
   }
 }

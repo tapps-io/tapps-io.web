@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid } from '@trutoo/ui-core';
+import { Grid } from '@trutoo/ui-core';
 
 import s from './Tapp.module.css';
 
@@ -24,15 +24,11 @@ export function Tapp({ prerender, title, description, version, packages, license
   if (scripts) useScript(...scripts);
   if (styles) useStyle(...styles);
   return (
-    <Container className={`${s.tapp} tu-elevation-1`}>
-      <Grid columns={[1, 1, 2]}>
-        <div dangerouslySetInnerHTML={{ __html: prerender }} />
-        <article>
-          <h2>{title}</h2>
-          <h3>version {version}</h3>
-          <p>{description}</p>
-        </article>
-      </Grid>
-    </Container>
+    <Grid className={`${s.tapp}`} columns={[1, 1, 2]}>
+      <div dangerouslySetInnerHTML={{ __html: prerender }} />
+      <article>
+        <p>{description}</p>
+      </article>
+    </Grid>
   );
 }

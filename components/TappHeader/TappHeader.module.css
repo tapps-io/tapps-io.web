@@ -1,0 +1,16 @@
+.tappHeader {
+  display: flex;
+  padding-bottom: 2rem;
+  height: 30vh;
+  align-items: flex-end;
+  color: white;
+  background-color: var(--c_beta_dark);
+
+  & .container {
+    width: 100%;
+  }
+
+  & .title {
+    color: var(--c_alpha_light);
+  }
+}
