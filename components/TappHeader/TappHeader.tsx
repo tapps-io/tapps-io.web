@@ -10,11 +10,11 @@ interface Props {
 
 export function TappHeader({ title, version }: Props) {
   return (
-    <header className={s.tappHeader}>
+    <section className={s.tappHeader}>
       <Container className={s.container}>
         <h1 className={s.title}>{title}</h1>
         <p className={s.info}>Version {version}</p>
       </Container>
-    </header>
+    </section>
   );
 }

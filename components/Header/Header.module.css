@@ -1,0 +1,25 @@
+.header {
+  position: relative;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
+  background-color: var(--c_beta_dark);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+
+  & .logo {
+    display: flex;
+    opacity: 0.3;
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    font-family: var(--f_stack_headings);
+    align-items: center;
+
+    & img {
+      margin-right: 0.5em;
+      width: 1.5em;
+      height: 1.5em;
+    }
+  }
+}

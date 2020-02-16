@@ -1,18 +1,30 @@
-// Place your settings in this file to overwrite default and user settings.
 {
+  "css.validate": false,
+  "docthis.includeMemberOfOnClassMembers": false,
+  "docthis.includeMemberOfOnInterfaceMembers": false,
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "files.insertFinalNewline": true,
-  "html.format.wrapAttributes": "force",
-  "prettier.disableLanguages": ["html"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "files.associations": {
     ".releaserc": "jsonc"
   },
-  "search.exclude": {
-    "**/node_modules": true
-  },
+  "files.insertFinalNewline": true,
   "highlight.regexes": {
-    "(Lang\\.[\\wåäöÅÄÖ.]+)": { "color": "#98c379" },
-    "(\\/\\/ ?(todo|ToDo|TODO):.+)": { "color": "#ffa8e0" }
-  }
+    "(Lang\\.[\\wåäöÅÄÖ.]+)": {
+      "color": "#98c379"
+    },
+    "(\\/\\/ ?(todo|ToDo|TODO):.+)": {
+      "color": "#ffa8e0"
+    }
+  },
+  "html.format.wrapAttributes": "force",
+  "search.exclude": {
+    "**/node_modules": true,
+    "dist": true
+  },
+  "stylelint.configOverrides": {
+    "ignoreFiles": "dist/**"
+  },
+  "stylelint.enable": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

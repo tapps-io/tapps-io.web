@@ -8,6 +8,7 @@ import s from './page.module.css';
 import APIUtil from 'utils/api';
 import { Tapp, TappProps } from 'components/Tapp/Tapp';
 import { TappHeader } from 'components/TappHeader/TappHeader';
+import { Header } from 'components/Header/Header';
 
 interface Props {
   tapp: TappProps;
@@ -22,10 +23,11 @@ export default class Page extends Component<Props> {
 
   render() {
     return (
-      <div>
+      <div className={s.page}>
+        <Header className={s.header} />
         <TappHeader {...this.props.tapp} />
         <Container>
-          <div className={`${s.card} tu-elevation-12`}>
+          <div className={`${s.card} tu-elevation-8`}>
             <Tapp {...this.props.tapp} />
           </div>
         </Container>
