@@ -4,9 +4,15 @@
   "extensions": {
     "codegen": {
       "generates": {
+        "./schema.graphql": [
+          "schema-ast"
+        ],
         "./generated/graphql.tsx": {
           "config": {
-            "withHooks": true
+            "withComponent": true,
+            "withHOC": false,
+            "withHooks": false,
+            "skipDocumentsValidation": true
           },
           "plugins": [
             {

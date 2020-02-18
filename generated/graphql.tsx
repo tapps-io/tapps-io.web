@@ -1,6 +1,10 @@
 /* eslint-disable */
 import gql from 'graphql-tag';
+import * as React from 'react';
+import * as ApolloReactCommon from '@apollo/react-common';
+import * as ApolloReactComponents from '@apollo/react-components';
 export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -668,14 +672,49 @@ export type UsersPermissionsUser = {
   updated_at: Scalars['DateTime'],
 };
 
-export type Unnamed_1_QueryVariables = {};
+export type GetTappsQueryVariables = {
+  tapp?: Maybe<Scalars['String']>
+};
 
 
-export type Unnamed_1_Query = (
+export type GetTappsQuery = (
   { __typename?: 'Query' }
   & { tapps: Maybe<Array<Maybe<(
     { __typename?: 'Tapp' }
-    & Pick<Tapp, 'title'>
+    & Pick<Tapp, 'tapp' | 'semver' | 'title' | 'description'>
+    & { sponsor: Maybe<(
+      { __typename?: 'Sponsor' }
+      & Pick<Sponsor, 'title' | 'link'>
+    )>, categories: Maybe<Array<Maybe<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'name' | 'description'>
+    )>>> }
   )>>> }
 );
 
+
+export const GetTappsDocument = gql`
+query getTapps($tapp: String) {
+  tapps(limit: 1, where: {tapp: $tapp}) {
+    tapp
+    semver
+    title
+    description
+    sponsor {
+      title
+      link
+    }
+    categories {
+      name
+      description
+    }
+  }
+}
+    `;
+export type GetTappsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetTappsQuery, GetTappsQueryVariables>, 'query'>;
+
+    export const GetTappsComponent = (props: GetTappsComponentProps) => (
+      <ApolloReactComponents.Query<GetTappsQuery, GetTappsQueryVariables> query={GetTappsDocument} {...props} />
+    );
+    
+export type GetTappsQueryResult = ApolloReactCommon.QueryResult<GetTappsQuery, GetTappsQueryVariables>;

@@ -1,5 +1,16 @@
-query {
-  tapps {
+query getTapps($tapp: String) {
+  tapps(limit: 1, where: { tapp: $tapp }) {
+    tapp
+    semver
     title
+    description
+    sponsor {
+      title
+      link
+    }
+    categories {
+      name
+      description
+    }
   }
 }

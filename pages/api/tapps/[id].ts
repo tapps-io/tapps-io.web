@@ -1,31 +1,29 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import fetch from 'isomorphic-unfetch';
 import { FragmentUtil } from 'utils/fragment';
+import { GetTappsQuery } from 'generated/graphql';
 
 export const get = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     query: { id },
   } = req;
 
-  const cmsData = (await fetch(`${process.env.CMS}/tapps?tapp=${id}`).then(res => res.json()))[0];
+  const queryData: GetTappsQuery = await fetch(`${process.env.CMS}/tapps?tapp=${id}`).then(res => res.json());
 
-  if (!cmsData) return res.status(404).end();
+  if (!queryData || !queryData.tapps || !queryData.tapps[0]) return res.status(404).end();
 
-  const tapp = {
-    title: cmsData.title,
-    description: cmsData.description,
-  };
+  const tappData = queryData.tapps[0];
 
-  const fragment = await fetch(`${process.env.GATEWAY}/fragments/tapps-io$tapp.${cmsData.tapp}@${cmsData.semver}`).then(
-    res => {
-      return res.text().then(prerender => ({
-        ...tapp,
-        prerender,
-        version: res.headers.get('x-version'),
-        ...FragmentUtil.splitLink(res.headers.get('link') || ''),
-      }));
-    },
-  );
+  const fragment = await fetch(
+    `${process.env.GATEWAY}/fragments/tapps-io$tapp.${tappData.tapp}@${tappData.semver}`,
+  ).then(res => {
+    return res.text().then(prerender => ({
+      ...queryData,
+      prerender,
+      version: res.headers.get('x-version'),
+      ...FragmentUtil.splitLink(res.headers.get('link') || ''),
+    }));
+  });
 
   res.send(fragment);
 };
