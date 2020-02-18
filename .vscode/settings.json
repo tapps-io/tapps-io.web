@@ -6,7 +6,8 @@
   "editor.tabSize": 2,
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "files.associations": {
-    ".releaserc": "jsonc"
+    ".releaserc": "jsonc",
+    ".graphqlrc": "json"
   },
   "files.insertFinalNewline": true,
   "highlight.regexes": {

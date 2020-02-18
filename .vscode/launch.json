@@ -34,6 +34,15 @@
       "name": "Build - debugging build steps",
       "program": "${workspaceFolder}/node_modules/webpack/bin/webpack.js"
       //"args": ["-w"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Gen Types",
+      "program": "${workspaceFolder}/node_modules/graphql-cli/dist/index.js",
+      "args": ["codegen"],
+      "trace": true,
+      "env": { "DEBUG": "true" }
     }
   ]
 }

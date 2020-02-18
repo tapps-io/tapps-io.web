@@ -9,8 +9,7 @@
   ],
   "description": "Web in charge of consuming the headless data from the content management system",
   "author": {
-    "name": "Trutoo AB",
-    "url": "https://www.trutoo.com/"
+    "name": "Erik Hughes"
   },
   "license": "GPL-3.0",
   "repository": "https://github.com/tapps-io/tapps-io.web.git",
@@ -29,9 +28,9 @@
     }
   },
   "scripts": {
-    "dev": "next -p 3005",
     "build": "next build",
-    "start": "next start"
+    "start": "next -p 3005",
+    "start:dist": "next start"
   },
   "dependencies": {
     "@trutoo/ui-core": "1.17.0",
@@ -43,30 +42,37 @@
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "1.12.2",
+    "@graphql-codegen/typescript-operations": "1.12.2",
+    "@graphql-codegen/typescript-react-apollo": "1.12.2",
+    "@graphql-codegen/typescript": "1.12.2",
     "@semantic-release/changelog": "^5.0.0",
     "@semantic-release/exec": "^5.0.0",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/github": "7.0.3",
     "@semantic-release/npm": "^7.0.3",
-    "@typescript-eslint/eslint-plugin": "2.19.2",
-    "@typescript-eslint/parser": "2.19.2",
+    "@test-graphql-cli/codegen": "4.0.1-beta.2",
+    "@typescript-eslint/eslint-plugin": "2.20.0",
+    "@typescript-eslint/parser": "2.20.0",
     "conventional-changelog-angular": "5.0.6",
-    "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-react": "7.18.3",
+    "eslint": "6.8.0",
+    "graphql-cli": "4.0.1-beta.2",
+    "graphql": "14.6.0",
     "husky": "4.2.3",
     "postcss-import": "12.0.1",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.7.0",
-    "prettier": "1.19.1",
     "prettier-loader": "3.3.0",
+    "prettier": "1.19.1",
     "semantic-release-docker": "^2.2.0",
-    "stylelint": "13.2.0",
     "stylelint-config-prettier": "8.0.1",
     "stylelint-config-standard": "20.0.0",
     "stylelint-webpack-plugin": "1.2.3",
-    "typescript": "^3.7.5"
+    "stylelint": "13.2.0",
+    "typescript": "3.7.5"
   },
   "optionalDependencies": {
     "@types/node": "^13.7.1",
