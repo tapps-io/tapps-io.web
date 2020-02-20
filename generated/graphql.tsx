@@ -185,7 +185,7 @@ export type EditRoleInput = {
 };
 
 export type EditSponsorInput = {
-  title?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
   link?: Maybe<Scalars['String']>,
 };
 
@@ -462,16 +462,16 @@ export type RoleInput = {
 
 export type Sponsor = {
    __typename?: 'Sponsor',
-  title: Scalars['String'],
-  link?: Maybe<Scalars['String']>,
+  name: Scalars['String'],
+  link: Scalars['String'],
   id: Scalars['ID'],
   created_at: Scalars['DateTime'],
   updated_at: Scalars['DateTime'],
 };
 
 export type SponsorInput = {
-  title: Scalars['String'],
-  link?: Maybe<Scalars['String']>,
+  name: Scalars['String'],
+  link: Scalars['String'],
 };
 
 export type Tapp = {
@@ -684,7 +684,7 @@ export type GetTappsQuery = (
     & Pick<Tapp, 'tapp' | 'semver' | 'title' | 'description'>
     & { sponsor: Maybe<(
       { __typename?: 'Sponsor' }
-      & Pick<Sponsor, 'title' | 'link'>
+      & Pick<Sponsor, 'name' | 'link'>
     )>, categories: Maybe<Array<Maybe<(
       { __typename?: 'Category' }
       & Pick<Category, 'name' | 'description'>
@@ -694,14 +694,14 @@ export type GetTappsQuery = (
 
 
 export const GetTappsDocument = gql`
-query getTapps($tapp: String) {
+    query getTapps($tapp: String) {
   tapps(limit: 1, where: {tapp: $tapp}) {
     tapp
     semver
     title
     description
     sponsor {
-      title
+      name
       link
     }
     categories {

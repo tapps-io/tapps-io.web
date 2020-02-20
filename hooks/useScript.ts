@@ -10,7 +10,7 @@ const useScript = (...urls: string[]) => {
       return script;
     });
     return () => {
-      scripts.forEach(script => document.body.removeChild(script));
+      //scripts.forEach(script => document.body.removeChild(script));
     };
   }, [urls]);
 };

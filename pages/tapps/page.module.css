@@ -4,6 +4,7 @@
 
   & .card {
     margin-top: -2rem;
+    margin-bottom: 2rem;
     padding: 1rem;
     border-radius: 0.5rem;
   }

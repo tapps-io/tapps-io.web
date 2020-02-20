@@ -1,8 +1,10 @@
 import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+
+import icons from '!raw-loader!@trutoo/ui-icons/dist/symbols.svg';
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
   }
@@ -18,6 +20,7 @@ class MyDocument extends Document {
         </Head>
         <body>
           <link href="/variables.css" rel="stylesheet" />
+          <div style={{ display: 'none' }} dangerouslySetInnerHTML={{ __html: icons }}></div>
           <Main />
           <NextScript />
         </body>

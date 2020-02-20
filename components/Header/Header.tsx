@@ -7,13 +7,18 @@ export interface HeaderProps {
   className?: string;
 }
 
-/**
- * Basic header used as an example for bootstrheadering.
- */
 export function Header({ className }: HeaderProps) {
+  const toggleDark = () => {
+    const theme = document.documentElement.getAttribute('data-theme');
+    document.documentElement.setAttribute('data-theme', theme == 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <header className={`${className} ${s.header}`}>
       <Container>
+        <a className={s.darkMode} onClick={toggleDark}>
+          🌙
+        </a>
         <a className={s.logo} href="/">
           <img src="/images/logo-white.svg" />
           tapps.io

@@ -5,7 +5,7 @@ query getTapps($tapp: String) {
     title
     description
     sponsor {
-      title
+      name
       link
     }
     categories {

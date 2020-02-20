@@ -9,7 +9,7 @@ const useStyle = (...urls: string[]) => {
       return link;
     });
     return () => {
-      links.forEach(link => document.body.removeChild(link));
+      //links.forEach(link => document.body.removeChild(link));
     };
   }, [urls]);
 };

@@ -1,3 +1,28 @@
 .tapp {
-  padding: 2rem;
+  transition: all var(--t_animation);
+
+  & .header {
+    height: 2rem;
+  }
+
+  & .more {
+    float: right;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  & .metadata {
+    &[aria-hidden='true'] {
+      display: none;
+    }
+
+    & h3 {
+      font-size: 1em;
+    }
+
+    & .dependencies {
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+  }
 }

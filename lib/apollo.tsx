@@ -21,7 +21,7 @@ interface ApolloProps extends ApolloInitialProps {
 
 const isAppContext = (ctx: NextPageContext | AppContext): ctx is AppContext => 'ctx' in ctx;
 
-const createApolloClient = (initialState: NormalizedCacheObject, ctx?: NextPageContext) => {
+export const createApolloClient = (initialState: NormalizedCacheObject, ctx?: NextPageContext) => {
   // The `ctx` (NextPageContext) will only be present on the server.
   // use it to extract auth headers (ctx.req) or similar.
   return new ApolloClient({
@@ -39,7 +39,7 @@ const createApolloClient = (initialState: NormalizedCacheObject, ctx?: NextPageC
  * Always creates a new apollo client on the server
  * Creates or reuses apollo client in the browser.
  */
-const initApolloClient = (initialState: NormalizedCacheObject, ctx?: NextPageContext) => {
+export const initApolloClient = (initialState: NormalizedCacheObject, ctx?: NextPageContext) => {
   // Make sure to create a new client for every server-side request so that data
   // isn't shared between connections (which would be bad)
   if (typeof window === 'undefined') {
@@ -59,7 +59,7 @@ const initApolloClient = (initialState: NormalizedCacheObject, ctx?: NextPageCon
  * or NextAppContext. Useful if you want to use apolloClient
  * inside getStaticProps, getStaticPaths or getServerProps
  */
-const initOnContext = (ctx: NextPageContext | AppContext) => {
+export const initOnContext = (ctx: NextPageContext | AppContext) => {
   let inAppContext = false;
   if (isAppContext(ctx)) {
     inAppContext = true;

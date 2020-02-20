@@ -142,7 +142,7 @@ input editRoleInput {
 }
 
 input editSponsorInput {
-  title: String
+  name: String
   link: String
 }
 
@@ -255,16 +255,16 @@ input RoleInput {
 }
 
 type Sponsor {
-  title: String!
-  link: String
+  name: String!
+  link: String!
   id: ID!
   created_at: DateTime!
   updated_at: DateTime!
 }
 
 input SponsorInput {
-  title: String!
-  link: String
+  name: String!
+  link: String!
 }
 
 type Tapp {

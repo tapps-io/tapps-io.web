@@ -7,42 +7,35 @@
     {
       "type": "chrome",
       "request": "attach",
-      "name": "Attach web - debugging in chrome",
-      "url": "http://localhost:3002*",
-      "webRoot": "${workspaceFolder}/src",
-      "port": 9222,
-      "sourceMaps": true
+      "name": "Next: Chrome",
+      "url": "http://localhost:3005*",
+      "webRoot": "${workspaceFolder}",
+      "port": 9222
     },
     {
       "type": "node",
-      "request": "attach",
-      "name": "Attach server - debugging server",
+      "request": "launch",
+      "name": "Next: Node",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/next",
+      "runtimeArgs": ["-p", "3005"],
+      "console": "integratedTerminal",
       "port": 9229,
-      "restart": true
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Start server - debugging server",
-      "protocol": "inspector",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
-      "args": ["-x", ".js,.jsx,.ts,.tsx", "src/server.ts"]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Build - debugging build steps",
-      "program": "${workspaceFolder}/node_modules/webpack/bin/webpack.js"
-      //"args": ["-w"]
+      "env": {
+        "NODE_OPTIONS": "--inspect"
+      }
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Gen Types",
       "program": "${workspaceFolder}/node_modules/graphql-cli/dist/index.js",
-      "args": ["codegen"],
-      "trace": true,
-      "env": { "DEBUG": "true" }
+      "args": ["codegen"]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Next: Full",
+      "configurations": ["Next: Node", "Next: Chrome"]
     }
   ]
 }
