@@ -23,7 +23,7 @@ interface TappFragment {
   contributors?: (string | { name?: string; email?: string; url?: string })[];
   license?: string;
   repository?: string;
-  bugs?: string;
+  issues?: string;
   scripts: string[];
   styles: string[];
   sponsor?: {
@@ -85,7 +85,7 @@ page.getInitialProps = async (ctx: NextPageContext) => {
         license: metadata.license,
         contributors: metadata.contributors,
         repository: metadata.repository,
-        bugs: metadata.bugs,
+        issues: metadata.bugs,
         dependencies: metadata.dependencies,
       }));
     });

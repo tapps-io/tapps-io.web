@@ -9,6 +9,20 @@ module.exports = withTM({
   },
   webpack(config) {
     config.resolve.modules.unshift(process.cwd());
+
+    /* Remove pure mode from css-loader */
+    let cssRule;
+    config.module.rules.forEach(group => {
+      if (!group.oneOf) return false;
+      cssRule = group.oneOf.find(rule => rule.test.toString() == '/\\.module\\.css$/');
+    });
+    if (cssRule) {
+      const cssLoader = cssRule.use.find(use => use.loader.includes('css-loader'));
+      if (cssLoader) {
+        cssLoader.options.modules.mode = 'local';
+      }
+    }
+
     return config;
   },
 });

@@ -3,9 +3,10 @@
   }
 
   & .card {
-    margin-top: -2rem;
+    margin-top: -2.5rem;
     margin-bottom: 2rem;
     padding: 1rem;
-    border-radius: 0.5rem;
+    padding-top: 0.5rem;
+    border-radius: 0.25rem;
   }
 }

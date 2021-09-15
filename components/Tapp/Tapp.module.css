@@ -1,21 +1,29 @@
 .tapp {
+  position: relative;
   transition: all var(--t_animation);
 
   & .header {
     height: 2rem;
-  }
+    margin-bottom: 1rem;
 
-  & .more {
-    float: right;
-    width: 1rem;
-    height: 1rem;
+    & h2 {
+      margin: 0;
+      font-size: 1.5em;
+      color: var(--c_alpha_dark);
+    }
+
+    & .more {
+      margin-top: 0.25rem;
+      float: right;
+
+      & svg {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
   }
 
   & .metadata {
-    &[aria-hidden='true'] {
-      display: none;
-    }
-
     & h3 {
       font-size: 1em;
     }
@@ -24,5 +32,18 @@
       margin-top: 1.5rem;
       width: 100%;
     }
+  }
+
+  & .metadata,
+  & .app {
+    transition: all var(--t_animation);
+    opacity: 1;
+  }
+
+  & [aria-hidden='true'] {
+    position: absolute;
+    width: 100%;
+    top: 2rem;
+    opacity: 0;
   }
 }
